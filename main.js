@@ -5,6 +5,42 @@ const FULL_HEART = '♥'
 // Your JavaScript code goes here!
 
 
+const likes = document.querySelectorAll('.like');
+
+likes.forEach((like) => {
+
+  like.addEventListener('click', (ev) => {
+    mimicServerCall()
+    .then(data => {
+      console.log(data);
+      
+      if (like.childNodes[1].textContent !== FULL_HEART){
+        like.childNodes[1].textContent = FULL_HEART;
+        like.childNodes[1].className = 'activated-heart';  
+      }else{
+        like.childNodes[1].textContent = EMPTY_HEART;
+        like.childNodes[1].className = '';
+      }
+
+  })
+    .catch(err => {
+      console.log(err);
+      
+      let errorModal = document.getElementById('modal');
+      errorModal.className = '';
+      
+      let errorMessage = document.getElementById('modal-message');
+      errorMessage.textContent = `Displaying ${err}`;
+      
+      setTimeout(() => { errorMessage.style.display = 'none'; }, "3000");
+      
+    })
+    
+  })
+})
+
+
+
 
 
 //------------------------------------------------------------------------------
